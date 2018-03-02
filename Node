@@ -1,0 +1,15 @@
+public interface Node {
+
+	public Node getNextInRow();
+		
+	
+	public void setNextInRow(Node next);
+		
+	
+	public Node getNextInCollumn();
+		
+	
+	public void setNextInCollumn(Node next);
+
+
+}
