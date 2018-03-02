@@ -1,0 +1,31 @@
+
+public class ValueNode implements Node{
+
+	int row;
+	int column;
+	int vlaue;
+	Node nextInRow;
+	Node nextInColumn;
+
+	
+	@Override
+	public Node getNextInRow() {
+		return nextInRow;
+	}
+	
+	public void setNextInRow(Node next) {
+		nextInRow = next;
+		
+	}
+	@Override
+	public Node getNextInCollumn() {
+		return nextInColumn;
+	}
+	@Override
+	public void setNextInCollumn(Node next) {
+		nextInColumn = next;
+		
+	}
+
+	
+}
