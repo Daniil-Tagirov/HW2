@@ -1,0 +1,58 @@
+
+public class MatrixColumn implements Node, HeadNode{
+	
+	int row;
+	int column;
+	int value;
+	Node nextInRow;
+	Node nextInColumn;
+	
+	
+	
+	@Override
+	public Node getNextInRow() {
+		return nextInRow;
+	}
+
+	@Override
+	public void setNextInRow(Node next) {
+		nextInRow = next;
+		
+	}
+
+	@Override
+	public Node getNextInCollumn() {
+		return nextInColumn;
+	}
+
+	@Override
+	public void setNextInCollumn(Node next) {
+		nextInColumn = next;
+		
+	}
+
+	@Override
+	public HeadNode getNext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ValueNode getFirst() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insert(ValueNode value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ValueNode get(int position) {
+		// TODO Auto-generated method stub
+		return null;
+	} 
+
+}
