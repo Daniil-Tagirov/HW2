@@ -1,0 +1,11 @@
+
+public interface HeadNode {
+
+		public HeadNode getNext();
+		
+		public ValueNode getFirst();
+		
+		public void insert(ValueNode value);
+		
+		public ValueNode get(int position);
+}
