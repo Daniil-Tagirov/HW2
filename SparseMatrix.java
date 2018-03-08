@@ -2,8 +2,8 @@ import java.io.PrintStream;
 
 public class SparseMatrix {
 
-    private HeadNode firstRow;
-    private HeadNode firstColumn;
+    private ValueNode firstRow;
+    private ValueNode firstColumn;
     private int totalRows;
     private int totalColumns;
 
@@ -11,66 +11,112 @@ public class SparseMatrix {
         // Create heads for amount of columns in matrix
         totalRows = rows;
         totalColumns = columns;
-        this.firstColumn = new MatrixColumn();
-        HeadNode currentColumn = this.firstColumn;
-        Node columnHead = (Node)currentColumn;
+        ValueNode theFirstColumn = new ValueNode();
+        this.firstColumn = theFirstColumn;
+
 
         for(int i = 1; i <= columns; i++) {
-            columnHead.setNextInRow(new MatrixColumn());
-            columnHead = columnHead.getNextInRow();
+            theFirstColumn.setNextInColumn(new ValueNode());
+            theFirstColumn = (ValueNode)theFirstColumn.getNextInColumn();
         }
 
 
-        // Create rows for amount of columns in matrix
-        this.firstRow = new MatrixRow();
-        HeadNode currentRow = this.firstRow;
-        Node rowHead = (Node)currentRow;
+        // Create heads for amount of rows in matrix
+        ValueNode theFirstRow = new ValueNode();
+        this.firstRow = theFirstRow;
+        ValueNode currentRow = this.firstRow;
 
         for(int i = 1; i <= rows; i++) {
-            rowHead.setNextInColumn(new MatrixRow());
-            rowHead = rowHead.getNextInColumn();
+            theFirstRow.setNextInRow(new ValueNode());
+            theFirstRow = (ValueNode)theFirstRow.getNextInRow();
         }
 
     }
 
 
     public void insert(int row, int column, int value) {
-        ValueNode nodeToInsert = new ValueNode(row, column, value);
-
-        HeadNode rowHead = getRow(row);
-        rowHead.insert(nodeToInsert);
-
-        HeadNode columnHead = getColumn(column);
-        columnHead.insert(nodeToInsert);
+    	ValueNode nodeToInsert = new ValueNode(row, column, value);
+    	ValueNode rowCount = firstRow;
+    	for (int i = 0; i < nodeToInsert.getRow(); i++) {
+    	rowCount = (ValueNode)rowCount.getNextInRow();
+    	}
+    	
+    	ValueNode getTheRow = new ValueNode();
+    	getTheRow = (ValueNode)rowCount.getNextInRow();
+    	
+    	//compare the row this node want to be in with the row the other node is in
+    	while (rowCount.getColumn() > getTheRow.getColumn()) { 
+    		rowCount = (ValueNode)rowCount.getNextInColumn();
+    		getTheRow = (ValueNode)getTheRow.getNextInColumn();
+    	}
+    	if (rowCount.getNextInColumn() != null) {
+    		nodeToInsert.setNextInColumn(rowCount.getNextInColumn());
+    	}
+    	rowCount.setNextInColumn(nodeToInsert);
+    	
+    	////////////////
+    	ValueNode columnCount = firstColumn;
+    	for (int i = 0; i < nodeToInsert.getColumn(); i++) {
+    		columnCount = (ValueNode)columnCount.getNextInRow();
+    	}
+    	ValueNode getTheColumn = new ValueNode();
+    	getTheColumn = (ValueNode)columnCount.getNextInColumn();
+    	while (columnCount.getRow() > getTheColumn.getRow()) { //might need to see if this value exists
+    		columnCount = (ValueNode)columnCount.getNextInRow();
+    		getTheColumn = (ValueNode)getTheColumn.getNextInRow();
+    	}
+    	if (columnCount.getNextInRow() != null) {
+    		nodeToInsert.setNextInRow(columnCount.getNextInRow());
+    	}
+    	columnCount.setNextInRow(nodeToInsert); 
     }
 
 
-    public HeadNode getRow (int position) {
-        HeadNode row = firstRow;
+    public ValueNode getRow (int position) {
+        ValueNode row = firstRow;
 
         for(int i = 1; i < position; i++) {
-            row = row.getNext();
+            row = (ValueNode)row.getNextInRow();
         }
 
         return row;
     }
 
 
-    public HeadNode getColumn (int position) {
-        HeadNode column = firstColumn;
+    public ValueNode getColumn (int position) {
+        ValueNode column = firstColumn;
 
         for (int i = 1; i < position; i++) {
-            column = column.getNext();
+            column = (ValueNode) column.getNextInColumn();
         }
 
         return column;
     }
 
     public int getValue(int row, int column) {
-        HeadNode r = getRow(row);
-        int result = r.get(column);
-
-        return result;
+        ValueNode counter = new ValueNode();
+        for (int i = 0; i <= row; i++) {
+        	counter = (ValueNode) counter.getNextInRow();
+        }
+        for (int j = 0; j <= column; j++) {
+        	if (counter.getColumn() > j) {
+        		//do nothing
+        	} else {
+        		//iterate counter.getNext
+            	if (counter.getNextInColumn() == null && counter.getColumn() != j) {
+            		return 0;
+            	} else if (counter.getColumn() == j) {
+            		return counter.getValue();
+            	}
+            	counter = (ValueNode) counter.getNextInColumn();
+        	}
+       
+        	if (counter.getNextInColumn() == null) {
+        		return 0;
+        	}
+        
+        }
+        return 0;
     }
 
 
