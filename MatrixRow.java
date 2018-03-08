@@ -16,7 +16,6 @@ public class MatrixRow implements Node, HeadNode {
 
     public void setNextInColumn(Node next) {
         nextInColumn = next;
-
     }
 
     public HeadNode getNext() {
@@ -27,30 +26,27 @@ public class MatrixRow implements Node, HeadNode {
         return (ValueNode)nextInRow;
     }
 
-
     public void insert(ValueNode value) {
-    	MatrixRow att = new MatrixRow();
-    	HeadNode attainHead = att;
-    	for (int i = 1; i < value.getRow(); i++) {
-    		attainHead = attainHead.getNext();
-    	} //gets us to the right column head
-    	ValueNode row = attainHead.getFirst(); // makes a new node at column head to iterate
-    	if (row.nextInColumn == null) {
-    		attainHead = (ValueNode)attainHead.setNextInColumn(value);
-    	}
-    	ValueNode getTheRow = (ValueNode)row.getNextInColumn(); // if no next node, unnecessary
-	while (row.getColumn() > getTheRow.getColumn()) { //compare the row this node want to be in with the row the other node is in
-			row = (ValueNode)row.getNextInColumn();
-			getTheRow = (ValueNode)getTheRow.getNextInColumn();
-		}
-		if (row.getNextInColumn() != null) {
-			value.setNextInColumn(row.getNextInColumn());
-		}
-		row.setNextInColumn(value); 
-        //insert along nextInColumn
-    	
-    }
+        if (getFirst() == null) {
+            setNextInRow(value);
+        }
+        else if(value.getColumn() < getFirst().getColumn()) {
+            value.setNextInRow(getFirst());
+            setNextInRow(value);
+        }
+        else {
+            ValueNode prev = getFirst();
+            ValueNode cur = (ValueNode)prev.getNextInRow();
 
+            while(cur != null && cur.getColumn() < value.getColumn()) {
+                prev = cur;
+                cur = (ValueNode)prev.getNextInRow();
+            }
+
+            value.setNextInRow(cur);
+            prev.setNextInRow(value);
+        }
+    }
 
     public int get(int position) {
         ValueNode cur = (ValueNode)nextInRow;
@@ -65,6 +61,14 @@ public class MatrixRow implements Node, HeadNode {
             return cur.getValue();
     }
 
-		
-	}
+    public void print() {
+        ValueNode cur = getFirst();
+
+        while(cur != null) {
+            System.out.print(cur.getValue() + "\t");
+            cur=(ValueNode)cur.getNextInRow();
+        }
+
+        System.out.println();
+    }
 }

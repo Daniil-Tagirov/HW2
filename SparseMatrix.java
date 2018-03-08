@@ -1,4 +1,3 @@
-import java.io.PrintStream;
 
 public class SparseMatrix {
 
@@ -19,7 +18,6 @@ public class SparseMatrix {
             columnHead.setNextInRow(new MatrixColumn());
             columnHead = columnHead.getNextInRow();
         }
-
 
         // Create rows for amount of columns in matrix
         this.firstRow = new MatrixRow();
@@ -80,6 +78,7 @@ public class SparseMatrix {
                 int currentValue = getValue(i, j);
                 System.out.print(currentValue + "\t");
             }
+
             System.out.println();
         }
     }

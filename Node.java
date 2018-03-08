@@ -1,4 +1,3 @@
-
 public interface Node {
     Node getNextInRow();
 
@@ -7,4 +6,5 @@ public interface Node {
     Node getNextInColumn();
 
     void setNextInColumn(Node next);
+
 }

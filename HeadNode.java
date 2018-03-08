@@ -1,4 +1,3 @@
-
 public interface HeadNode {
     HeadNode getNext();
 
@@ -7,5 +6,5 @@ public interface HeadNode {
     void insert(ValueNode value);
 
     int get(int position);
-}
 
+}

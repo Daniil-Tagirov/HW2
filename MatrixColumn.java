@@ -27,36 +27,28 @@ public class MatrixColumn implements Node, HeadNode{
     }
 
     public void insert(ValueNode value) {
-    	MatrixColumn att = new MatrixColumn();
-    	HeadNode attainHead = att;
-    	for (int i = 1; i < value.getColumn(); i++) {
-    		attainHead = attainHead.getNext();
-    	} //gets us to the right column head
-    	ValueNode column = attainHead.getFirst(); // makes a new node at column head to iterate
-    	ValueNode getTheRow = (ValueNode)column.getNextInRow();
-	while (column.getRow() > getTheRow.getRow()) { //compare the row this node want to be in with the row the other node is in
-			column = (ValueNode)column.getNextInRow();
-			getTheRow = (ValueNode)getTheRow.getNextInRow();
-		}
-		if (column.getNextInRow() != null) {
-			value.setNextInRow(column.getNextInRow());
-		}
-		column.setNextInRow(value); 
-        //insert along nextInColumn
-		@Override
-		public void setNextInColumn(ValueNode valuenode) {
-			// TODO Auto-generated method stub
-			
-		}
+        if (getFirst() == null)  {
+            setNextInColumn(value);
+        } else if (value.getRow() < getFirst().getRow() ) {
+            value.setNextInColumn(getFirst());
+            setNextInColumn(value);
+        } else {
 
-		@Override
-		public void setNextInRow(ValueNode vlasdljg) {
-			
-			// TODO Auto-generated method stub
+            ValueNode previous = getFirst();
+            ValueNode cur = (ValueNode)previous.getNextInColumn();
+            while (cur != null && cur.getRow() < value.getRow()) {
+                previous = cur;
+                cur = (ValueNode)previous.getNextInColumn();
+            }
+            value.setNextInColumn(cur);
+            previous.setNextInColumn(value);
+        }
+
     }
 
+
     public int get(int position) {
-    	ValueNode cur = (ValueNode)nextInColumn;
+        ValueNode cur = (ValueNode)nextInColumn;
 
         while(cur != null && cur.getRow() < position) {
             cur = (ValueNode)cur.getNextInColumn();
@@ -69,18 +61,15 @@ public class MatrixColumn implements Node, HeadNode{
     }
 
 
-	public Node getNextInCollumn() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void print(){
+        ValueNode curent = getFirst();
 
-
-	public void setNextInCollumn(Node next) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
+        while (curent != null) {
+            System.out.print(curent.getValue() + "\t");
+            curent = (ValueNode)curent.getNextInColumn();
+        }
+        System.out.println();
+    }
 }
 
 	
