@@ -1,5 +1,4 @@
-
-public class MatrixRow implements Node, HeadNode {
+public class MatrixRow implements Node{
     private Node nextInRow;
     private Node nextInColumn;
 
@@ -30,14 +29,26 @@ public class MatrixRow implements Node, HeadNode {
 
 
     public void insert(ValueNode value) {
-        //insert along nextInRow
-        ValueNode next = (ValueNode)getNextInColumn();
-
-        int nodeValue = value.getValue();
-
-        ValueNode cur = (ValueNode)nextInRow;
-        while (cur != null && nodeValue < next.getNextInColumn(next.getValue());
-
+   /* 	MatrixRow att = new MatrixRow();
+    	HeadNode attainHead = att;
+    	for (int i = 1; i < value.getRow(); i++) {
+    		attainHead = attainHead.getNext();
+    	} //gets us to the right column head
+    	ValueNode row = attainHead.getFirst(); // makes a new node at column head to iterate
+    	if (row.nextInColumn == null) {
+    		attainHead = (ValueNode)attainHead.setNextInColumn(value);
+    	}
+    	ValueNode getTheRow = (ValueNode)row.getNextInColumn(); // if no next node, unnecessary
+	while (row.getColumn() > getTheRow.getColumn()) { //compare the row this node want to be in with the row the other node is in
+			row = (ValueNode)row.getNextInColumn();
+			getTheRow = (ValueNode)getTheRow.getNextInColumn();
+		}
+		if (row.getNextInColumn() != null) {
+			value.setNextInColumn(row.getNextInColumn());
+		}
+		row.setNextInColumn(value); 
+        //insert along nextInColumn
+    	*/
     }
 
 
@@ -53,4 +64,8 @@ public class MatrixRow implements Node, HeadNode {
         else
             return cur.getValue();
     }
+
+		
+}
+
 }
