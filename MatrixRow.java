@@ -27,19 +27,19 @@ public class MatrixRow implements Node, HeadNode {
     }
 
     public void insert(ValueNode value) {
-        if (getFirst() == null) {
-            setNextInRow(value);
-        }
-        else if(value.getColumn() < getFirst().getColumn()) {
-            value.setNextInRow(getFirst());
-            setNextInRow(value);
+    	if (getFirst() == null) {
+    		setNextInRow(value);
+    	}
+    	else if(value.getColumn() < getFirst().getColumn()) {
+    	    value.setNextInRow(getFirst());
+    	    setNextInRow(value);
         }
         else {
-            ValueNode prev = getFirst();
-            ValueNode cur = (ValueNode)prev.getNextInRow();
+    	    ValueNode prev = getFirst();
+    	    ValueNode cur = (ValueNode)prev.getNextInRow();
 
-            while(cur != null && cur.getColumn() < value.getColumn()) {
-                prev = cur;
+    	    while(cur != null && cur.getColumn() < value.getColumn()) {
+    	        prev = cur;
                 cur = (ValueNode)prev.getNextInRow();
             }
 
@@ -59,16 +59,5 @@ public class MatrixRow implements Node, HeadNode {
             return 0;
         else
             return cur.getValue();
-    }
-
-    public void print() {
-        ValueNode cur = getFirst();
-
-        while(cur != null) {
-            System.out.print(cur.getValue() + "\t");
-            cur=(ValueNode)cur.getNextInRow();
-        }
-
-        System.out.println();
     }
 }

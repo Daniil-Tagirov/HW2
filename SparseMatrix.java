@@ -73,20 +73,29 @@ public class SparseMatrix {
 
 
     public void print() {
+
         for(int i = 1; i <= totalRows; i++) {
             for(int j = 1; j <= totalColumns; j++) {
                 int currentValue = getValue(i, j);
                 System.out.print(currentValue + "\t");
             }
-
             System.out.println();
         }
     }
 
 
     public SparseMatrix transpose() {
-        //FILL
-        return new SparseMatrix(0, 0);
+        int rows = totalColumns;
+        int columns = totalRows;
+        SparseMatrix matrixT = new SparseMatrix(rows, columns);
+
+        for (int i = 1; i <= columns; i++) {
+            for (int j = 1; j <= rows; j++) {
+                matrixT.insert(j, i, getValue(i,j));
+            }
+        }
+
+        return matrixT;
     }
 
 

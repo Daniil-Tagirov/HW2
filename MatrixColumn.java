@@ -29,11 +29,14 @@ public class MatrixColumn implements Node, HeadNode{
     public void insert(ValueNode value) {
         if (getFirst() == null)  {
             setNextInColumn(value);
-        } else if (value.getRow() < getFirst().getRow() ) {
+        }
+
+        else if (value.getRow() < getFirst().getRow() ) {
             value.setNextInColumn(getFirst());
             setNextInColumn(value);
-        } else {
+        }
 
+        else {
             ValueNode previous = getFirst();
             ValueNode cur = (ValueNode)previous.getNextInColumn();
             while (cur != null && cur.getRow() < value.getRow()) {
@@ -59,17 +62,4 @@ public class MatrixColumn implements Node, HeadNode{
         else
             return cur.getValue();
     }
-
-
-    public void print(){
-        ValueNode curent = getFirst();
-
-        while (curent != null) {
-            System.out.print(curent.getValue() + "\t");
-            curent = (ValueNode)curent.getNextInColumn();
-        }
-        System.out.println();
-    }
 }
-
-	
